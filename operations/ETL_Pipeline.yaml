@@ -1,0 +1,64 @@
+resources:
+  jobs:
+    E_commerce_Medallion_ETL_Pipeline:
+      name: E-commerce Medallion ETL Pipeline
+      email_notifications:
+        on_success:
+          - tasbirul.devops@gmail.com
+        on_failure:
+          - tasbirul.devops@gmail.com
+      trigger:
+        pause_status: UNPAUSED
+        periodic:
+          interval: 1
+          unit: DAYS
+      tasks:
+        - task_key: bronze
+          notebook_task:
+            notebook_path: /Users/tasbirul.devops@gmail.com/Databricks-Medallion-Project/notebooks/bronze
+            base_parameters:
+              catalog: workspace
+              schema: ecom_poc
+              volume: raw_files
+            source: WORKSPACE
+          max_retries: 2
+          min_retry_interval_millis: 0
+          retry_on_timeout: true
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          notebook_task:
+            notebook_path: /Users/tasbirul.devops@gmail.com/Databricks-Medallion-Project/notebooks/silver
+            base_parameters:
+              catalog: workspace
+              schema: ecom_poc
+            source: WORKSPACE
+          max_retries: 2
+          min_retry_interval_millis: 0
+          retry_on_timeout: true
+        - task_key: gold
+          depends_on:
+            - task_key: silver
+          notebook_task:
+            notebook_path: /Users/tasbirul.devops@gmail.com/Databricks-Medallion-Project/notebooks/gold
+            base_parameters:
+              catalog: workspace
+              schema: ecom_poc
+            source: WORKSPACE
+          max_retries: 2
+          min_retry_interval_millis: 0
+          retry_on_timeout: true
+        - task_key: reconciliation
+          depends_on:
+            - task_key: gold
+          notebook_task:
+            notebook_path: /Users/tasbirul.devops@gmail.com/Databricks-Medallion-Project/notebooks/reconciliation
+            base_parameters:
+              catalog: workspace
+              schema: ecom_poc
+            source: WORKSPACE
+          max_retries: 2
+          min_retry_interval_millis: 0
+          retry_on_timeout: true
+      queue:
+        enabled: true
