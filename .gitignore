@@ -1,0 +1,36 @@
+# ==========================================
+# 1. Credentials, Tokens & Environment Secrets
+# ==========================================
+.env
+.env.*
+*.pem
+*.key
+*.token
+.databrickscfg
+secrets.*
+credentials.*
+
+# ==========================================
+# 2. Python & Local Generator Artifacts
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.pytest_cache/
+
+# ==========================================
+# 3. Notebooks & IDE / OS Temporary Files
+# ==========================================
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+~$*
