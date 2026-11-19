@@ -1,0 +1,736 @@
+{
+  "datasets": [
+    {
+      "name": "daily_sales",
+      "displayName": "Gold Daily Sales",
+      "queryLines": [
+        "SELECT\n",
+        "  order_date,\n",
+        "  order_count,\n",
+        "  eligible_order_count,\n",
+        "  cancelled_order_count,\n",
+        "  cancellation_rate,\n",
+        "  eligible_revenue\n",
+        "FROM\n",
+        "  gold_daily_sales"
+      ],
+      "catalog": "workspace",
+      "schema": "ecom_poc"
+    },
+    {
+      "name": "revenue_breakdown",
+      "displayName": "Gold Revenue Breakdown",
+      "queryLines": [
+        "SELECT\n",
+        "  category,\n",
+        "  country,\n",
+        "  order_count,\n",
+        "  customer_count,\n",
+        "  eligible_revenue,\n",
+        "  revenue_share\n",
+        "FROM\n",
+        "  gold_revenue_breakdown"
+      ],
+      "catalog": "workspace",
+      "schema": "ecom_poc"
+    },
+    {
+      "name": "top_customers",
+      "displayName": "Gold Top Customers",
+      "queryLines": [
+        "SELECT\n",
+        "  customer_id,\n",
+        "  eligible_spend,\n",
+        "  eligible_order_count,\n",
+        "  spend_rank\n",
+        "FROM\n",
+        "  gold_top_customers\n",
+        "ORDER BY\n",
+        "  spend_rank"
+      ],
+      "catalog": "workspace",
+      "schema": "ecom_poc"
+    },
+    {
+      "name": "payment_success",
+      "displayName": "Gold Payment Success",
+      "queryLines": [
+        "SELECT\n",
+        "  payment_method,\n",
+        "  transaction_count,\n",
+        "  successful_count,\n",
+        "  success_rate,\n",
+        "  total_amount_usd\n",
+        "FROM\n",
+        "  gold_payment_success"
+      ],
+      "catalog": "workspace",
+      "schema": "ecom_poc"
+    }
+  ],
+  "pages": [
+    {
+      "name": "e39693e1",
+      "displayName": "Page 1",
+      "layout": [
+        {
+          "widget": {
+            "name": "kpi_revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "daily_sales",
+                  "fields": [
+                    {
+                      "name": "sum(eligible_revenue)",
+                      "expression": "SUM(`eligible_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Eligible Revenue"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(eligible_revenue)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_orders",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "daily_sales",
+                  "fields": [
+                    {
+                      "name": "sum(order_count)",
+                      "expression": "SUM(`order_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Orders"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(order_count)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_eligible",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "daily_sales",
+                  "fields": [
+                    {
+                      "name": "sum(eligible_order_count)",
+                      "expression": "SUM(`eligible_order_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Eligible Orders"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(eligible_order_count)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_cancel",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "daily_sales",
+                  "fields": [
+                    {
+                      "name": "avg(cancellation_rate)",
+                      "expression": "AVG(`cancellation_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Avg Cancellation Rate"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(cancellation_rate)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "daily_sales",
+                  "fields": [
+                    {
+                      "name": "monthly(order_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `order_date`)"
+                    },
+                    {
+                      "name": "sum(eligible_revenue)",
+                      "expression": "SUM(`eligible_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue Trend (Monthly)"
+              },
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(order_date)",
+                  "displayName": "Month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(eligible_revenue)",
+                  "displayName": "eligible_revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "cancel_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "daily_sales",
+                  "fields": [
+                    {
+                      "name": "monthly(order_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `order_date`)"
+                    },
+                    {
+                      "name": "avg(cancellation_rate)",
+                      "expression": "AVG(`cancellation_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Cancellation Rate Trend"
+              },
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(order_date)",
+                  "displayName": "Month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg(cancellation_rate)",
+                  "displayName": "cancellation_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_by_cat",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "revenue_breakdown",
+                  "fields": [
+                    {
+                      "name": "category",
+                      "expression": "`category`"
+                    },
+                    {
+                      "name": "sum(eligible_revenue)",
+                      "expression": "SUM(`eligible_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by Category"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "category",
+                  "displayName": "category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(eligible_revenue)",
+                  "displayName": "eligible_revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "category",
+                  "displayName": "category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "revenue_breakdown",
+                  "fields": [
+                    {
+                      "name": "category",
+                      "expression": "`category`"
+                    },
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "order_count",
+                      "expression": "`order_count`"
+                    },
+                    {
+                      "name": "customer_count",
+                      "expression": "`customer_count`"
+                    },
+                    {
+                      "name": "eligible_revenue",
+                      "expression": "`eligible_revenue`"
+                    },
+                    {
+                      "name": "revenue_share",
+                      "expression": "`revenue_share`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by Category × Country"
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "category"
+                  },
+                  {
+                    "fieldName": "country"
+                  },
+                  {
+                    "fieldName": "order_count"
+                  },
+                  {
+                    "fieldName": "customer_count"
+                  },
+                  {
+                    "fieldName": "eligible_revenue"
+                  },
+                  {
+                    "fieldName": "revenue_share"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 8,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "payment_success",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "payment_success",
+                  "fields": [
+                    {
+                      "name": "payment_method",
+                      "expression": "`payment_method`"
+                    },
+                    {
+                      "name": "sum(success_rate)",
+                      "expression": "SUM(`success_rate`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Payment Success Rate"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "payment_method",
+                  "displayName": "payment_method",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(success_rate)",
+                  "displayName": "success_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "payment_method",
+                  "displayName": "payment_method",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 12,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "top10_customers",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top_customers",
+                  "fields": [
+                    {
+                      "name": "customer_id",
+                      "expression": "`customer_id`"
+                    },
+                    {
+                      "name": "sum(eligible_spend)",
+                      "expression": "SUM(`eligible_spend`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 Customers by Spend"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "customer_id",
+                  "displayName": "customer_id",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(eligible_spend)",
+                  "displayName": "eligible_spend",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "customer_id",
+                  "displayName": "customer_id",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 18,
+            "width": 5,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "top_customers_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top_customers",
+                  "fields": [
+                    {
+                      "name": "spend_rank",
+                      "expression": "`spend_rank`"
+                    },
+                    {
+                      "name": "customer_id",
+                      "expression": "`customer_id`"
+                    },
+                    {
+                      "name": "eligible_spend",
+                      "expression": "`eligible_spend`"
+                    },
+                    {
+                      "name": "eligible_order_count",
+                      "expression": "`eligible_order_count`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Top 100 Customers"
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "spend_rank"
+                  },
+                  {
+                    "fieldName": "customer_id"
+                  },
+                  {
+                    "fieldName": "eligible_spend"
+                  },
+                  {
+                    "fieldName": "eligible_order_count"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 18,
+            "width": 7,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#F6FAFB",
+        "dark": "#1B1F23"
+      },
+      "widgetBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#2A2F35"
+      },
+      "widgetBorderColor": {
+        "light": "#D7E1E9",
+        "dark": "#3C444C"
+      },
+      "fontColor": {
+        "light": "#374151",
+        "dark": "#E4E9EE"
+      },
+      "selectionColor": {
+        "light": "#5FA8D3",
+        "dark": "#5FA8D3"
+      },
+      "visualizationColors": [
+        "#15AFDD",
+        "#2375A8",
+        "#52A870",
+        "#C85070",
+        "#C89930"
+      ],
+      "widgetHeaderAlignment": "LEFT"
+    },
+    "applyModeEnabled": false
+  }
+}
